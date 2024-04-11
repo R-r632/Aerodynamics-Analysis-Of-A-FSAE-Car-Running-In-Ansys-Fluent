@@ -1,0 +1,9 @@
+# encoding: utf-8
+# 2024 R1
+SetScriptVersion(Version="24.1.144")
+Save(Overwrite=True)
+Archive(
+    FilePath="E:/Ansys/Project/Aerodynamics of FSAE Car_2021R1.wbpz",
+    IncludeExternalImportedFiles=True)
+Save(Overwrite=True)
+Save(Overwrite=True)

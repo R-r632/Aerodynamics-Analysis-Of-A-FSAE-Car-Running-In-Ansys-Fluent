@@ -1,0 +1,80 @@
+# encoding: utf-8
+# 2023 R1
+SetScriptVersion(Version="23.1.153")
+template1 = GetTemplate(TemplateName="Geometry")
+system1 = template1.CreateSystem()
+geometry1 = system1.GetContainer(ComponentName="Geometry")
+geometry1.Edit(IsDiscoveryGeometry=True)
+geometry1.SetFile(FilePath="E:/Ansys/Project/FSAE-Car.scdoc")
+geometry1.Exit()
+geometry1.Edit(IsSpaceClaimGeometry=True)
+geometry1.Exit()
+geometry1.Edit(IsDiscoveryGeometry=True)
+geometry1.Exit()
+geometry1.Edit(IsSpaceClaimGeometry=True)
+geometry1.Exit()
+template2 = GetTemplate(TemplateName="Fluid Flow with Fluent Meshing")
+system2 = template2.CreateSystem(
+    Position="Right",
+    RelativeTo=system1)
+system2.Delete()
+system3 = template2.CreateSystem(
+    Position="Right",
+    RelativeTo=system1)
+system3.Delete()
+system1.Delete()
+system4 = template1.CreateSystem()
+template3 = GetTemplate(
+    TemplateName="Fluid Flow",
+    Solver="CFX")
+geometryComponent1 = system4.GetComponent(Name="Geometry")
+system5 = template3.CreateSystem(
+    ComponentsToShare=[geometryComponent1],
+    Position="Right",
+    RelativeTo=system4)
+geometry2 = system4.GetContainer(ComponentName="Geometry")
+geometry2.SetFile(FilePath="E:/Ansys/Project/FSAES_Cars3.scdoc")
+system5.Delete()
+system6 = template2.CreateSystem(
+    ComponentsToShare=[geometryComponent1],
+    Position="Right",
+    RelativeTo=system4)
+tGridCADImportOptions1 = GetDataEntity("/Mesh/TGridCADImportOptions:TGridCADImportOptions")
+tGridCADImportOptions1.Units = "mm"
+setup1 = system6.GetContainer(ComponentName="Setup")
+fluentLauncherSettings1 = setup1.GetFluentLauncherSettings()
+fluentLauncherSettings1.SetEntityProperties(Properties=Set(Precision="Double", EnvPath={}, RunParallel=True, NumberOfProcessorsMeshing=4, NumberOfProcessors=4))
+tGridData1 = GetDataEntity("/Mesh/TGridData:TGridData")
+tGridData1.SetEntityProperties(Properties=Set(RunParallel=True, NumberOfProcs=4))
+mesh1 = system6.GetContainer(ComponentName="Mesh")
+Fluent.Edit(Container=mesh1)
+setup1.SendCommand(Command='(cx-gui-do cx-activate-tab-index "NavigationPane*Frame1(TreeTab)" 0)(cx-gui-do cx-activate-tab-index "NavigationPane*Frame1(TreeTab)" 1)')
+meshComponent1 = system6.GetComponent(Name="Mesh")
+meshComponent1.Refresh()
+setup1.SendCommand(Command='/file/set-tui-version "23.1"(cx-gui-do cx-activate-tab-index "NavigationPane*Frame1(TreeTab)" 0)')
+setup1.SendCommand(Command="(%py-exec \"meshing.GlobalSettings.LengthUnit.set_state(r'mm')\")")
+setup1.SendCommand(Command="(%py-exec \"meshing.GlobalSettings.AreaUnit.set_state(r'mm^2')\")")
+setup1.SendCommand(Command="(%py-exec \"meshing.GlobalSettings.VolumeUnit.set_state(r'mm^3')\")")
+setup1.SendCommand(Command="(%py-exec \"workflow.TaskObject['Import Geometry'].Execute()\")")
+setup1.SendCommand(Command="(%py-exec \"workflow.TaskObject['Add Local Sizing'].Arguments.set_state({r'AddChild': r'yes',r'BOIControlName': r'boi-nearfield',r'BOIExecution': r'Body Of Influence',r'BOIFaceLabelList': [r'fsae-car-boi-1'],r'BOISize': 16,})\")")
+setup1.SendCommand(Command="(%py-exec \"workflow.TaskObject['Add Local Sizing'].AddChildAndUpdate()\")")
+setup1.SendCommand(Command="(%py-exec \"workflow.TaskObject['Add Local Sizing'].Arguments.set_state({r'AddChild': r'yes',r'BOIControlName': r'curvature-wing',r'BOIExecution': r'Curvature',r'BOIFaceLabelList': [r'front-wing', r'rearwing'],r'BOIMaxSize': 12,r'BOIMinSize': 0.5,})\")")
+setup1.SendCommand(Command="(%py-exec \"workflow.TaskObject['Add Local Sizing'].AddChildAndUpdate()\")")
+setup1.SendCommand(Command="(%py-exec \"workflow.TaskObject['Add Local Sizing'].Arguments.set_state({r'AddChild': r'yes',r'BOIControlName': r'curvature-rods',r'BOIExecution': r'Curvature',r'BOIFaceLabelList': [r'rods'],r'BOIMaxSize': 16,r'BOIMinSize': 4,})\")")
+setup1.SendCommand(Command="(%py-exec \"workflow.TaskObject['Add Local Sizing'].AddChildAndUpdate()\")")
+setup1.SendCommand(Command="(%py-exec \"workflow.TaskObject['Add Local Sizing'].Arguments.set_state({r'AddChild': r'yes',r'BOIControlName': r'curvature-wheels',r'BOIExecution': r'Curvature',r'BOIFaceLabelList': [r'front-wheel', r'rear-wheel'],r'BOIMaxSize': 32,r'BOIMinSize': 16,})\")")
+setup1.SendCommand(Command="(%py-exec \"workflow.TaskObject['Add Local Sizing'].AddChildAndUpdate()\")")
+setup1.SendCommand(Command="(%py-exec \"workflow.TaskObject['Add Local Sizing'].Arguments.set_state({r'AddChild': r'yes',r'BOIControlName': r'curvature-chassis',r'BOIExecution': r'Curvature',r'BOIFaceLabelList': [r'chassis'],r'BOIMaxSize': 32,r'BOIMinSize': 8,})\")")
+setup1.SendCommand(Command="(%py-exec \"workflow.TaskObject['Add Local Sizing'].AddChildAndUpdate()\")")
+setup1.SendCommand(Command="(%py-exec \"workflow.TaskObject['Add Local Sizing'].Arguments.set_state({r'AddChild': r'yes',r'BOIControlName': r'curvature-brakes',r'BOIExecution': r'Curvature',r'BOIFaceLabelList': [r'front-brakes', r'rear-brakes'],r'BOIMaxSize': 32,r'BOIMinSize': 16,})\")")
+setup1.SendCommand(Command="(%py-exec \"workflow.TaskObject['Add Local Sizing'].AddChildAndUpdate()\")")
+setup1.SendCommand(Command="(%py-exec \"workflow.TaskObject['Add Local Sizing'].Arguments.set_state({r'AddChild': r'yes',r'BOIControlName': r'curvature-wheelradii',r'BOIExecution': r'Curvature',r'BOIFaceLabelList': [r'wheelradi'],})\")")
+setup1.SendCommand(Command="(%py-exec \"workflow.TaskObject['Add Local Sizing'].AddChildAndUpdate()\")")
+setup1.SendCommand(Command="(%py-exec \"workflow.TaskObject['Add Local Sizing'].Arguments.set_state({r'AddChild': r'yes',r'BOIExecution': r'Body Of Influence',r'BOIFaceLabelList': [r'fsae-car-boi-2'],r'BOISize': 64,})\")")
+setup1.SendCommand(Command="(%py-exec \"workflow.TaskObject['Add Local Sizing'].AddChildAndUpdate()\")")
+setup1.SendCommand(Command="(%py-exec \"workflow.DeleteTasks(ListOfTasks=[r'boi_1'])\")")
+setup1.SendCommand(Command="(%py-exec \"workflow.TaskObject['Add Local Sizing'].Arguments.set_state({r'AddChild': r'yes',r'BOIControlName': r'boi-farfield',r'BOIExecution': r'Body Of Influence',r'BOIFaceLabelList': [r'fsae-car-boi-2'],r'BOISize': 64,})\")")
+setup1.SendCommand(Command="(%py-exec \"workflow.TaskObject['Add Local Sizing'].AddChildAndUpdate()\")")
+setup1.SendCommand(Command="(%py-exec \"workflow.TaskObject['Generate the Surface Mesh'].Arguments.set_state({r'CFDSurfaceMeshControls': {r'CellsPerGap': 3,r'MaxSize': 256,r'MinSize': 0.5,},})\")")
+setup1.SendCommand(Command="(%py-exec \"workflow.TaskObject['Generate the Surface Mesh'].Execute()\")")
+setup1.SendCommand(Command="(%py-exec \"workflow.TaskObject['Describe Geometry'].UpdateChildTasks(SetupTypeChanged=False)\")")

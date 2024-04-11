@@ -1,0 +1,355 @@
+{
+    "workflow": {
+        "version": "21.1",
+        "ROOT": {
+            "Workflow": {
+                "TaskList": [
+                    "TaskObject1",
+                    "TaskObject2",
+                    "TaskObject3",
+                    "TaskObject4",
+                    "TaskObject9",
+                    "TaskObject10",
+                    "TaskObject11",
+                    "TaskObject21"
+                ]
+            },
+            "TaskObject:TaskObject1": {
+                "_name_": "Import Geometry",
+                "State": "Out-of-date",
+                "CommandName": "ImportCadFaceting",
+                "TaskType": "Simple",
+                "ObjectPath": "",
+                "Arguments": {
+                    "FileName": "D:\\S2_C1\\Fluid-Domain-v3.scdoc",
+                    "LengthUnit": "mm",
+                    "NumParts": "3"
+                }
+            },
+            "TaskObject:TaskObject10": {
+                "_name_": "Add Boundary Layers",
+                "State": "Out-of-date",
+                "CommandName": "CreatePrismControl",
+                "TaskType": "Compound",
+                "ObjectPath": "",
+                "Arguments": "",
+                "TaskList": [
+                    "TaskObject20"
+                ]
+            },
+            "TaskObject:TaskObject11": {
+                "_name_": "Generate the Volume Mesh",
+                "State": "Out-of-date",
+                "CommandName": "PrismAndMesh",
+                "TaskType": "Simple",
+                "ObjectPath": "",
+                "Arguments": {
+                    "VolumeFill": "poly-hexcore"
+                }
+            },
+            "TaskObject:TaskObject12": {
+                "_name_": "boi-nearfield",
+                "State": "Out-of-date",
+                "CommandName": "BodyOfInfluence",
+                "TaskType": "Compound Child",
+                "Arguments": {
+                    "AddChild": "yes",
+                    "BOIControlName": "boi-nearfield",
+                    "BOIExecution": "Body Of Influence",
+                    "BOIFaceLabelList": [
+                        "boi-nearfield"
+                    ],
+                    "BOISize": "16"
+                }
+            },
+            "TaskObject:TaskObject13": {
+                "_name_": "curvature-wing",
+                "State": "Out-of-date",
+                "CommandName": "BodyOfInfluence",
+                "TaskType": "Compound Child",
+                "Arguments": {
+                    "AddChild": "yes",
+                    "BOIControlName": "curvature-wing",
+                    "BOIExecution": "Curvature",
+                    "BOIFaceLabelList": [
+                        "frontwing",
+                        "rearwing"
+                    ],
+                    "BOIMaxSize": "12",
+                    "BOIMinSize": "0.5"
+                }
+            },
+            "TaskObject:TaskObject14": {
+                "_name_": "curvature-rods",
+                "State": "Out-of-date",
+                "CommandName": "BodyOfInfluence",
+                "TaskType": "Compound Child",
+                "Arguments": {
+                    "AddChild": "yes",
+                    "BOIControlName": "curvature-rods",
+                    "BOIExecution": "Curvature",
+                    "BOIFaceLabelList": [
+                        "rods"
+                    ],
+                    "BOIMaxSize": "16",
+                    "BOIMinSize": "4"
+                }
+            },
+            "TaskObject:TaskObject15": {
+                "_name_": "curvature-wheels",
+                "State": "Out-of-date",
+                "CommandName": "BodyOfInfluence",
+                "TaskType": "Compound Child",
+                "Arguments": {
+                    "AddChild": "yes",
+                    "BOIControlName": "curvature-wheels",
+                    "BOIExecution": "Curvature",
+                    "BOIFaceLabelList": [
+                        "frontwheel",
+                        "rearwheel"
+                    ],
+                    "BOIMaxSize": "32",
+                    "BOIMinSize": "16"
+                }
+            },
+            "TaskObject:TaskObject16": {
+                "_name_": "curvature-brakes",
+                "State": "Out-of-date",
+                "CommandName": "BodyOfInfluence",
+                "TaskType": "Compound Child",
+                "Arguments": {
+                    "AddChild": "yes",
+                    "BOIControlName": "curvature-brakes",
+                    "BOIExecution": "Curvature",
+                    "BOIFaceLabelList": [
+                        "frontbrakes",
+                        "rearbrakes"
+                    ],
+                    "BOIMaxSize": "32",
+                    "BOIMinSize": "16"
+                }
+            },
+            "TaskObject:TaskObject17": {
+                "_name_": "curvature-chassis",
+                "State": "Out-of-date",
+                "CommandName": "BodyOfInfluence",
+                "TaskType": "Compound Child",
+                "Arguments": {
+                    "AddChild": "yes",
+                    "BOIControlName": "curvature-chassis",
+                    "BOIExecution": "Curvature",
+                    "BOIFaceLabelList": [
+                        "chassis"
+                    ],
+                    "BOIMaxSize": "32",
+                    "BOIMinSize": "8"
+                }
+            },
+            "TaskObject:TaskObject18": {
+                "_name_": "curvature-wheelradii",
+                "State": "Out-of-date",
+                "CommandName": "BodyOfInfluence",
+                "TaskType": "Compound Child",
+                "Arguments": {
+                    "AddChild": "yes",
+                    "BOIControlName": "curvature-wheelradii",
+                    "BOIExecution": "Curvature",
+                    "BOIFaceLabelList": [
+                        "wheelradii"
+                    ],
+                    "BOIMaxSize": "4",
+                    "BOIMinSize": "1"
+                }
+            },
+            "TaskObject:TaskObject19": {
+                "_name_": "boi-farfield",
+                "State": "Out-of-date",
+                "CommandName": "BodyOfInfluence",
+                "TaskType": "Compound Child",
+                "Arguments": {
+                    "AddChild": "yes",
+                    "BOIControlName": "boi-farfield",
+                    "BOIExecution": "Body Of Influence",
+                    "BOIFaceLabelList": [
+                        "boi-farfield"
+                    ],
+                    "BOISize": "64"
+                }
+            },
+            "TaskObject:TaskObject2": {
+                "_name_": "Add Local Sizing",
+                "State": "Out-of-date",
+                "CommandName": "BodyOfInfluence",
+                "TaskType": "Compound",
+                "ObjectPath": "",
+                "Arguments": {
+                    "AddChild": "yes"
+                },
+                "TaskList": [
+                    "TaskObject12",
+                    "TaskObject13",
+                    "TaskObject14",
+                    "TaskObject15",
+                    "TaskObject16",
+                    "TaskObject17",
+                    "TaskObject18",
+                    "TaskObject19"
+                ]
+            },
+            "TaskObject:TaskObject20": {
+                "_name_": "last-ratio_1",
+                "State": "Out-of-date",
+                "CommandName": "CreatePrismControl",
+                "TaskType": "Compound Child",
+                "Arguments": {
+                    "BLControlName": "last-ratio_1",
+                    "BlLabelList": [
+                        "chassis",
+                        "frontbrakes",
+                        "frontwheel",
+                        "frontwing",
+                        "rearbrakes",
+                        "rearwheel",
+                        "rearwing",
+                        "rods",
+                        "wheelradii"
+                    ],
+                    "CompleteBlLabelList": [
+                        "chassis",
+                        "frontbrakes",
+                        "frontwheel",
+                        "frontwing",
+                        "rearbrakes",
+                        "rearwheel",
+                        "rearwing",
+                        "rods",
+                        "wheelradii"
+                    ],
+                    "FaceScope": {
+                        "GrowOn": "selected-labels"
+                    },
+                    "NumberOfLayers": "10",
+                    "OffsetMethodType": "last-ratio",
+                    "TransitionRatio": "0.20000000000000001"
+                }
+            },
+            "TaskObject:TaskObject21": {
+                "_name_": "Improve Volume Mesh",
+                "State": "Out-of-date",
+                "CommandName": "VolumeMeshImprove",
+                "TaskType": "Simple",
+                "ObjectPath": "",
+                "Arguments": {
+                    "CellQualityLimit": "0.10000000000000001"
+                }
+            },
+            "TaskObject:TaskObject3": {
+                "_name_": "Generate the Surface Mesh",
+                "State": "Out-of-date",
+                "CommandName": "ImportSurfaceMesh",
+                "TaskType": "Simple",
+                "ObjectPath": "",
+                "Arguments": {
+                    "CFDSurfaceMeshControls": {
+                        "CellsPerGap": "3",
+                        "MaxSize": "256",
+                        "MinSize": "0.5"
+                    },
+                    "OriginalZones": [
+                        "inlet",
+                        "tunnel-walls",
+                        "outlet",
+                        "symmetry",
+                        "ground",
+                        "rearwing",
+                        "wheelradii",
+                        "rods",
+                        "frontwing",
+                        "chassis",
+                        "frontwheel",
+                        "frontbrakes",
+                        "rearwheel",
+                        "rearbrakes"
+                    ]
+                }
+            },
+            "TaskObject:TaskObject4": {
+                "_name_": "Describe Geometry",
+                "State": "Out-of-date",
+                "CommandName": "GeometrySetup",
+                "TaskType": "Conditional",
+                "ObjectPath": "",
+                "InactiveTaskList": [
+                    "TaskObject5",
+                    "TaskObject6",
+                    "TaskObject8"
+                ],
+                "TaskList": [
+                    "TaskObject7"
+                ],
+                "Arguments": {
+                    "OldZoneList": [
+                        "symmetry",
+                        "outlet",
+                        "inlet"
+                    ],
+                    "SetupType": "The geometry consists of only fluid regions with no voids"
+                }
+            },
+            "TaskObject:TaskObject5": {
+                "_name_": "Apply Share Topology",
+                "State": "Out-of-date",
+                "CommandName": "ShareTopology",
+                "TaskType": "Simple",
+                "ObjectPath": ""
+            },
+            "TaskObject:TaskObject6": {
+                "_name_": "Enclose Fluid Regions (Capping)",
+                "State": "Out-of-date",
+                "CommandName": "CreatePatch",
+                "TaskType": "Compound",
+                "ObjectPath": ""
+            },
+            "TaskObject:TaskObject7": {
+                "_name_": "Update Boundaries",
+                "State": "Out-of-date",
+                "CommandName": "UpdateBoundary",
+                "TaskType": "Simple",
+                "ObjectPath": ""
+            },
+            "TaskObject:TaskObject8": {
+                "_name_": "Create Regions",
+                "State": "Out-of-date",
+                "CommandName": "ComputeRegions",
+                "TaskType": "Simple",
+                "ObjectPath": ""
+            },
+            "TaskObject:TaskObject9": {
+                "_name_": "Update Regions",
+                "State": "Out-of-date",
+                "CommandName": "UpdateRegion",
+                "TaskType": "Simple",
+                "ObjectPath": ""
+            }
+        }
+    },
+    "meshing": {
+        "version": "21.1",
+        "ROOT": {
+            "GlobalSettings": {
+                "InitialVersion": "21.1",
+                "NormalMode": "false",
+                "EnableComplexMeshing": "false"
+            }
+        }
+    },
+    "PartManagement": {
+        "version": "21.1",
+        "ROOT": {
+            "AssemblyNode:AssemblyNode1": {
+                "_name_": "Meshing Model",
+                "Name": "Meshing Model"
+            }
+        }
+    }
+}

@@ -1,0 +1,28 @@
+# encoding: utf-8
+# 2021 R1
+SetScriptVersion(Version="21.1.216")
+Save(Overwrite=True)
+system1 = GetSystem(Name="FLTG")
+setup1 = system1.GetContainer(ComponentName="Setup")
+fluentLauncherSettings1 = setup1.GetFluentLauncherSettings()
+fluentLauncherSettings1.NumberOfProcessors = 4
+fluentLauncherSettings1.UseJobScheduler = False
+solution1 = system1.GetContainer(ComponentName="Solution")
+solution1.Edit()
+setup1.SendCommand(Command='(cx-gui-do cx-activate-tab-index "NavigationPane*Frame1(TreeTab)" 0)(cx-gui-do cx-activate-tab-index "NavigationPane*Frame1(TreeTab)" 1)')
+setup1.SendCommand(Command='/file/set-tui-version "21.1"')
+setup1.SendCommand(Command='(cx-gui-do cx-activate-item "Ribbon*Frame1*Frame5(Solution)*Table1*Table3(Reports)*PushButton1(Residuals)")')
+setup1.SendCommand(Command='(cx-gui-do cx-activate-item "Residual Monitors*PanelButtons*PushButton4(Plot)")')
+setup1.SendCommand(Command='(cx-gui-do cx-activate-item "Residual Monitors*PanelButtons*PushButton2(Cancel)")')
+setup1.SendCommand(Command='(cx-gui-do cx-activate-item "Ribbon*Frame1*Frame5(Solution)*Table1*Table3(Reports)*Table4*PushButton2(Plot)")')
+setup1.SendCommand(Command="(cx-gui-do cx-set-list-selections \"Report Plot Definitions*Table1*List1(Report Plots)\" '( 0))(cx-gui-do cx-activate-item \"Report Plot Definitions*Table1*List1(Report Plots)\")")
+setup1.SendCommand(Command='(cx-gui-do cx-activate-item "Report Plot Definitions*Table1*ButtonBox3*PushButton2(Edit)")')
+setup1.SendCommand(Command='(cx-gui-do cx-activate-item "Edit Report Plot*PanelButtons*PushButton6(Plot)")')
+setup1.SendCommand(Command='(cx-gui-do cx-activate-item "Edit Report Plot*PanelButtons*PushButton2(Cancel)")')
+setup1.SendCommand(Command="(cx-gui-do cx-set-list-selections \"Report Plot Definitions*Table1*List1(Report Plots)\" '( 0 1))(cx-gui-do cx-activate-item \"Report Plot Definitions*Table1*List1(Report Plots)\")(cx-gui-do cx-set-list-selections \"Report Plot Definitions*Table1*List1(Report Plots)\" '( 1))(cx-gui-do cx-activate-item \"Report Plot Definitions*Table1*List1(Report Plots)\")")
+setup1.SendCommand(Command='(cx-gui-do cx-activate-item "Report Plot Definitions*Table1*ButtonBox3*PushButton2(Edit)")')
+setup1.SendCommand(Command='(cx-gui-do cx-activate-item "Edit Report Plot*PanelButtons*PushButton6(Plot)")')
+setup1.SendCommand(Command='(cx-gui-do cx-activate-item "Edit Report Plot*PanelButtons*PushButton2(Cancel)")')
+setup1.SendCommand(Command='(cx-gui-do cx-activate-item "Report Plot Definitions*PanelButtons*PushButton1(Close)")')
+setup1.SendCommand(Command='(cx-gui-do cx-activate-item "MenuBar*FileMenu*Close Fluent")')
+Save(Overwrite=True)
